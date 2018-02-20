@@ -11,7 +11,7 @@ td {
 }
 
 #numFils {
-    width: 3px;
+    width: 3rem;
 }
 #numCols {
     width: 3rem;
@@ -21,4 +21,7 @@ td {
 }
 #colDest{
     width: 3rem;
+}
+#destination {
+    background-color: red;
 }
