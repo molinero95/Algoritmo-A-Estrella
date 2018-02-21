@@ -1,4 +1,4 @@
-export class Matrix {
+class Matrix {
     //Atributos:
     //fils -> Number
     //cols -> Number
@@ -12,10 +12,23 @@ export class Matrix {
         this.destination = new Coord(filD, colD);
     }
 
+    getPossitionValue(fil, col){
+        let elem = $(".f"+fil+ " .c"+col);
+        if(elem.prop("id") == "destination")
+            return "destination";
+        else{
+            if (elem.hasClass("block"))
+                return "block";
+            else if(elem.hasClass("selected"))
+                return "init";
+            else
+                return "clear";
+        }
+    }
 
     addInitialCoord(fil, col) {
         if (!this.initCoords)
-            this.initCoords = new Array[];
+            this.initCoords = new Array();
         let coord = new Coord(fil, col);
         this.initCoords.push(coord);
     }
@@ -32,7 +45,7 @@ export class Matrix {
 
     addBlockCoord(fil, col) {
         if (!this.blockCoords)
-            this.blockCoords = new Array[];
+            this.blockCoords = new Array();
         let coord = new Coord(fil, col);
         this.blockCoords.push(coord);
     }
@@ -45,7 +58,7 @@ export class Matrix {
                 element.splice(i, 1);
             i++;
         });
-    }
+    } 
 }
 
 class Coord {

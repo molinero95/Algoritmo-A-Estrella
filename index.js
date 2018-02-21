@@ -1,8 +1,7 @@
-import { Matrix } from "./matrix";
-
 $(function () {
     $("#aceptar").on("click", acceptClick);
     initTable();
+    acceptClick();
 });
 let matrix;
 
@@ -35,7 +34,6 @@ function initTable(fils, cols, dFil, dCol) {
 }
 
 function clickPosition(event) {
-    console.log(event);
     let fila = event.target.classList[0];
     let col = event.target.classList[1];
     let item = $("." + fila + "." + col);
@@ -44,10 +42,10 @@ function clickPosition(event) {
             if (!item.hasClass("block")) {
                 if (!item.hasClass("selected")) {
                     $("." + fila + "." + col).css("background-color", "green");
-                    item.addClass("selected");
+                    item.addClass("selected");    
                 }
                 else {
-                    $("." + fila + "." + col).css("background-color", "gray");
+                    $("." + fila + "." + col).css("background-color", "lightgray");
                     item.removeClass("selected");
                 }
             }
@@ -59,7 +57,7 @@ function clickPosition(event) {
                     item.addClass("block");
                 }
                 else {
-                    $("." + fila + "." + col).css("background-color", "gray");
+                    $("." + fila + "." + col).css("background-color", "lightgray");
                     item.removeClass("block");
                 }
             }
