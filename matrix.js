@@ -5,7 +5,7 @@ class Matrix {
     //Lo de abajo no, vamos a tener una matriz [][] y le vamos a añadir los elementos
     //destination -> Coord
     //initCoords -> Array de Coords
-    //blockCoords -> Array de Coords
+    //No necesitamos un array de bloques
     constructor(fils, cols, filD, colD) {
         this.fils = fils;
         this.cols = cols;
