@@ -1,12 +1,18 @@
 $(function () {
     $("#aceptar").on("click", acceptClick);
+    $("#calcular").on("click", startClick);
     initTable();
     acceptClick();
     let tdPd = $("td").css("padding");
 
 });
-let matrix;
+var matrix;
 
+
+function startClick () {
+    //Por ahora lo hago sólo con 1 comienz
+    matrix.start();
+}
 
 function acceptClick() {
     $("#calcular").prop("disabled", false);
@@ -55,20 +61,22 @@ function initTable(fils, cols, dFil, dCol) {
 
 function clickPosition(event) {
     let fila = event.target.classList[0];
+    let filaPos = fila.split('f')[1];
     let col = event.target.classList[1];
+    let colPos = col.split('c')[1];
     let item = $("." + fila + "." + col);
     if (item.prop("id") !== "destination") {
         if ($("#initSelected").is(":checked")) {  //casilla marcada
             if (!item.hasClass("block")) {
                 if (!item.hasClass("selected")) {
                     $("." + fila + "." + col).css("background-color", "green");
-                    item.addClass("selected");    
-                    matrix.addInitialCoord(fila, col);
+                    item.addClass("selected");
+                    matrix.addInitialCoord(filaPos, colPos);
                 }
                 else {
                     $("." + fila + "." + col).css("background-color", "lightgray");
                     item.removeClass("selected");
-                    matrix.removeInitialCoord(fila, col);
+                    matrix.removeInitialCoord(filaPos, colPos);
                 }
             }
         }

@@ -17,7 +17,7 @@ td {
     background-color: lightgray;
     border-style: solid;
     border-width: 3px;
-    border-color: black;
+    border-color: white;
 }
 
 @media only screen and (min-width: 200px){
