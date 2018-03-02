@@ -11,8 +11,19 @@ class AStar{
 
     start(){
         this.insertIntoOpened(new Coord(this.init.getRow(), this.init.getCol(), 0));    //Insertamos el inicio en abierta
+        let actual = this.getFromOpened();
         while(!this.found && this.hasPath){
+            actual = this.getFromOpened();  //obtenemos el menor valor de abierta
+            this.insertIntoClosed(actual);
 
+            //caso base, final
+            if(this.matrix.getPossitionValue(actual.getRow(), actual.getCol()) !== "destination")
+                this.found = true;
+            if(this.opened.length === 0 && !this.found)
+                this.hasPath = false;
+        }
+        if(this.found){
+            //devolver camino
         }
     }
 
@@ -20,8 +31,8 @@ class AStar{
         return this.found;
     }
 
-    getLowestOpened(){
-        this.opened.pop();
+    getFromOpened(){
+        return this.opened.pop();
     }
 
     insertIntoOpened(coord){

@@ -3,6 +3,7 @@ class Coord {
         this.row = row;
         this.col = col;
         this.value = value || 0;
+        this.before = null;
     }
 
     getRow(){
@@ -15,5 +16,12 @@ class Coord {
 
     getValue(){
         return this.value;
+    }
+
+    getBefore(){
+        return this.before;
+    }
+    setBefore(coord){
+        this.before = coord;
     }
 }

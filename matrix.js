@@ -2,11 +2,11 @@ class Matrix {
     //Al pulsar sobre generar matriz rellenara una matriz con blanks excepto los bloques que pondrá block,
 //el destino tendrá destination
     //Para marcar las posiciones en el array, añadiremos clases m + numero de ficha
-    constructor(rows, cols, rowD, colD) {
+    constructor(rows, cols, destination) {
         this.rows = rows;
         this.cols = cols;
-        this.destination = new Coord(rowD, colD);
-        this.matrix = []
+        this.destination = destination;
+        this.matrix = [];
         for (let i = 0; i < rows; i++) {
             this.matrix[i] = [];
             for (let j = 0; j < cols; j++) {
