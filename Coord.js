@@ -1,23 +1,34 @@
 class Coord {
-    constructor(row, col, value){
+    constructor(row, col, estimation, actDistance){
         this.row = row;
         this.col = col;
-        this.value = value || 0;
+        this.estimation = estimation || 0;
+        this.actDistance = actDistance || 0;
+        //this.totalDist = estimation + actDistance || 0;
         this.before = null;
     }
-
+    //Posición
     getRow(){
         return this.row;
     }
-
     getCol(){
         return this.col;
     }
-
-    getValue(){
-        return this.value;
+    //Distancia desde origen a actual
+    getDistFromOrigin(){
+        return this.actDistance;
     }
-
+    setDistFromOrigin(totalDist){
+        this.actDistance = totalDist;
+    }
+    //Estimacion desde actual a final
+    getEstimation(){
+        return this.estimation;
+    }
+    setEstimation(estimation){
+        this.estimation = estimation;
+    }
+    //Puntero al padre
     getBefore(){
         return this.before;
     }
