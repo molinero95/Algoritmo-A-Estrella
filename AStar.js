@@ -14,9 +14,9 @@ class AStar {
         let actual;
         while (!this.found && this.hasPath) {
             actual = this.getFromOpened();  //obtenemos el menor valor de abierta
-            this.expandNode(actual);
             this.insertIntoClosed(actual);
-            if (this.matrix.getPossitionValue(actual.getRow(), actual.getCol()) !== "end")  //es solucion
+            this.expandNode(actual);
+            if (actual.getRow() === this.end.getRow() && actual.getCol() === this.end.getCol())  //es solucion
                 this.found = true;
             else {  //caso base, final
 
@@ -26,37 +26,41 @@ class AStar {
 
         }
         if (this.found) {
-            return sort(buildSolutionPath); //devolver camino
+            return this.buildSolutionPath().sort(); //devolver camino
         }
     }
 
     expandNode(coord) {
         for (let i = -1; i <= 1; i++) {
-            for (let j = -1; j <= 1; J++) {
+            for (let j = -1; j <= 1; j++) {
                 let row = coord.getRow() + i;
                 let col = coord.getCol() + j;
                 let actual = new Coord(row, col);
-                if (this.matrix.inMatrixLimit(actual) && i !== 0 && j !== 0) {
+                if (this.matrix.inMatrixLimit(actual) && (i !== 0 || j !== 0)) {
                     actual.setBefore(coord);    //padre es coord
                     actual.setEstimation(this.estimate(actual));
                     //valor del anterior + distancia entre padre e hijo + estimación
-                    actual.setDistFromOrigin(coord.getDistFromOrigin() + getDistance(coord, actual));
-                    let inOpened = this.opened.find(function (elem) {
+                    actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual));
+                    let inOpened = this.opened.find(function (elem) {//busco si n esta en abierta
                         if (elem.getRow() === i && elem.getCol() === j) {
-                            if (actual.getDistFromOrigin() + actual.getEstimation() < elem.getDistFromOrigin() + elem.getEstimation())
+                            if (actual.getDistFromOrigin() < elem.getDistFromOrigin())
                                 elem = actual;
                             return true;
                         }
                     });
                     if(!inOpened){
-                        
+                        //comprobar si esta en cerrada
+                        let inClosed = false;
+                        if(!inClosed)  //ni en abierta ni en cerrada
+                            this.insertIntoOpened(actual);
                     }
+                    
 
                     //this.insertIntoOpened(actual);
                 }
             }
         }
-        this.opened.sort(this.compareFunction); //reordenamos despues de cada expansión
+        this.opened = this.opened.sort(this.compareFunction); //reordenamos despues de cada expansión
     }
 
     getDistance(coord1, coord2){
@@ -79,7 +83,7 @@ class AStar {
 
     buildSolutionPath() {
         if (this.found) {
-            buildSolutionPathRec(this.end);
+            this.buildSolutionPathRec(this.end);
             return this.solution;
         }
     }
@@ -99,7 +103,9 @@ class AStar {
     }
 
     getFromOpened() {
-        return this.opened.pop();
+        let first = this.opened[0];
+        this.opened.splice(0,1);
+        return first;
     }
 
     insertIntoOpened(coord) {
@@ -108,20 +114,6 @@ class AStar {
 
     insertIntoClosed(coord) {
         this.closed.push(coord);
-    }
-
-
-    //Probar
-    //función para ordenar los arrays de mayor a menor, para hacer pop por la derecha.
-    compareFunction(a, b) {
-        let aT = a.getEstimation() + a.getDistFromOrigin();
-        let bT = b.getEstimation() + b.getDistFromOrigin();
-        if (aT > bT)
-            return -1;
-        if (aT === bT)
-            return 0;
-        if (aT < bT)
-            return 1;
     }
 
 
@@ -137,26 +129,7 @@ class AStar {
         else {
             let dRow = Math.abs(row - this.end.getRow());
             let dCol = Math.abs(col - this.end.getCol());
-            return Math.sqrt(Math.pow(dRow), Math.pow(dCol));
-        }
-    }
-
-    estimateSurrounded(coord) {
-        let row = coord.getRow();
-        let col = coord.getCol();
-        for (let i = row - 1; i <= row + 1; i++) {
-            for (let j = col - 1; j <= col + 1; j++) {
-                if (i !== row && j !== col && this.matrix.inMatrixLimit(new Coord(i, j))) {
-                    let elem = $(".f" + i + " .c" + j);
-                    if (matrix[i][j] === "blank") {
-                        this.matrix[i][j].estimated = this.estimate(new Coord(i, j));
-                        if (i !== row && j !== col)  //nos movemos en diagonal
-                            this.matrix[i][j].acumulated = this.matrix[row][col].acumulated + Math.sqrt(1, 1);
-                        else
-                            this.matrix[i][j].acumulated = this.matrix[row][col].acumulated + 1;
-                    }
-                }
-            }
+            return Math.sqrt(Math.pow(dRow, 2), Math.pow(dCol, 2));
         }
     }
 }
