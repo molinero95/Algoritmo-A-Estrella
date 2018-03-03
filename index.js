@@ -10,8 +10,15 @@ var matrix;
 
 
 function startClick () {
-    //Por ahora lo hago sólo con 1 comienz
-    matrix.start();
+    let dFil = Number($("#filDest").prop("value")) - 1;
+    let dCol = Number($("#colDest").prop("value")) - 1;
+    let star = null;
+    $(".selected").each(function(key, elem){
+        let split = $(elem).attr("class").split(" ");
+        let initCoord = new Coord(Number(split[0][1]), Number(split[1][1]));
+        star = new AStar(initCoord, new Coord(dFil, dCol), matrix);
+        star.start();
+    });
 }
 
 function acceptClick() {

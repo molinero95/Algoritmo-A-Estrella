@@ -11,7 +11,7 @@ class Matrix {
             this.matrix[i] = [];
             for (let j = 0; j < cols; j++) {
                 this.matrix[i][j] = "blank";
-                if (i === rowD && j === colD)
+                if (i === this.rowD && j === this.colD)
                     this.matrix[i][j] = "destination";
             }
         }
@@ -61,5 +61,6 @@ class Matrix {
             return false;
         return true;
     }
+
     
 }
