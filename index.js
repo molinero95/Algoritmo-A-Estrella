@@ -17,7 +17,7 @@ function startClick () {
         let split = $(elem).attr("class").split(" ");
         let initCoord = new Coord(Number(split[0][1]), Number(split[1][1]));
         star = new AStar(initCoord, new Coord(dFil, dCol), matrix);
-        star.start();
+        console.log(star.start());
     });
 }
 

@@ -9,24 +9,24 @@ class AStar {
         this.matrix = matrix;
     }
 
+    //Falta la parte de closed
     start() {
         this.insertIntoOpened(new Coord(this.init.getRow(), this.init.getCol(), this.estimate(this.init)));    //Insertamos el inicio en abierta
         let actual;
         while (!this.found && this.hasPath) {
             actual = this.getFromOpened();  //obtenemos el menor valor de abierta
             this.insertIntoClosed(actual);
-            this.expandNode(actual);
             if (actual.getRow() === this.end.getRow() && actual.getCol() === this.end.getCol())  //es solucion
                 this.found = true;
             else {  //caso base, final
-
+                this.expandNode(actual);
                 if (this.opened.length === 0 && !this.found)
                     this.hasPath = false;
             }
 
         }
         if (this.found) {
-            return this.buildSolutionPath().sort(); //devolver camino
+            return this.buildSolutionPath(); //devolver camino
         }
     }
 
@@ -36,13 +36,14 @@ class AStar {
                 let row = coord.getRow() + i;
                 let col = coord.getCol() + j;
                 let actual = new Coord(row, col);
-                if (this.matrix.inMatrixLimit(actual) && (i !== 0 || j !== 0)) {
+                //Necesitamos una especie de marcaje
+                if (this.matrix.inMatrixLimit(actual) && (i !== 0 || j !== 0) && this.matrix.getPossitionValue(row, col) !== "block") {
                     actual.setBefore(coord);    //padre es coord
                     actual.setEstimation(this.estimate(actual));
                     //valor del anterior + distancia entre padre e hijo + estimación
                     actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual));
                     let inOpened = this.opened.find(function (elem) {//busco si n esta en abierta
-                        if (elem.getRow() === i && elem.getCol() === j) {
+                        if (elem.getRow() === row && elem.getCol() === col) {
                             if (actual.getDistFromOrigin() < elem.getDistFromOrigin())
                                 elem = actual;
                             return true;
@@ -63,6 +64,19 @@ class AStar {
         this.opened = this.opened.sort(this.compareFunction); //reordenamos despues de cada expansión
     }
 
+    compareFunction(a, b) {
+        if(a.getEstimation() === 0)
+            return -1;
+        else if(b.getEstimation() === 0)
+            return 1;
+        else if(a.getEstimation() + a.getDistFromOrigin() < b.getEstimation() + b.getDistFromOrigin())
+            return -1;
+        else if(a.getEstimation() + a.getDistFromOrigin() === b.getEstimation() + b.getDistFromOrigin())
+            return 0;
+        else
+            return 1;
+    }
+
     getDistance(coord1, coord2){
         let row = coord1.getRow();
         let col = coord1.getCol();
@@ -75,7 +89,7 @@ class AStar {
         else {
             let dRow = Math.abs(row - coord2.getRow());
             let dCol = Math.abs(col - coord2.getCol());
-            return Math.sqrt(Math.pow(dRow), Math.pow(dCol));
+            return Math.sqrt(Math.pow(dRow, 2), Math.pow(dCol,2));
         }
     }
 
@@ -83,16 +97,20 @@ class AStar {
 
     buildSolutionPath() {
         if (this.found) {
-            this.buildSolutionPathRec(this.end);
+            this.solution = [];
+            this.buildSolutionPathRec(this.closed[this.closed.length - 1]);
             return this.solution;
         }
     }
 
     buildSolutionPathRec(act) {
-        if (act.before)
-            this.solution.push(this.buildSolutionPathRec(act.before));
+        if (act.before){
+            this.buildSolutionPathRec(act.before);
+            if(act.getCol() !== this.end.getCol() || act.getRow() !== this.end.getRow())
+                matrix.paintCoordPath(act);
+            this.solution.push(act);
+        }
         else {
-            this.solution = [];
             this.solution.push(act);
         }
 

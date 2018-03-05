@@ -18,13 +18,13 @@ class Matrix {
     }
 
     getPossitionValue(row, col) {
-        let elem = $(".f" + row + " .c" + col);
-        if (elem.prop("id") == "destination")
+        let elem = $(".f" + row)[col];
+        if (elem.id === "destination")
             return "destination";
         else {
-            if (elem.hasClass("block"))
+            if (elem.classList[2] === "block")
                 return "block";
-            else if (elem.hasClass("selected"))
+            else if (elem.classList[2] === "selected")
                 return "init";
             else
                 return "clear";
@@ -60,6 +60,13 @@ class Matrix {
         if(coord.getCol() < 0 || coord.getCol() >= this.cols || coord.getRow() < 0 || coord.getRow() >= this.cols)
             return false;
         return true;
+    }
+
+    paintCoordPath(coord){
+        let row = coord.getRow();
+        let col = coord.getCol();
+        let elem = $("td.f"+row+".c"+col);
+        elem.css("background", "blue");
     }
 
     
