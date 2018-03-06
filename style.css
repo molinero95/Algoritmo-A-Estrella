@@ -20,6 +20,10 @@ td {
     border-color: white;
 }
 
+td:hover{
+    background: grey;
+}
+
 @media only screen and (min-width: 200px){
     td{
         padding: 7px;

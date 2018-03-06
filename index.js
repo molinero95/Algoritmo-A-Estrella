@@ -7,17 +7,17 @@ $(function () {
 
 });
 var matrix;
-
+var mouseDown;
 
 function startClick () {
     let dFil = Number($("#filDest").prop("value")) - 1;
     let dCol = Number($("#colDest").prop("value")) - 1;
     let star = null;
-    $(".selected").each(function(key, elem){
+    $("td.selected").each(function(key, elem){
         let split = $(elem).attr("class").split(" ");
-        let initCoord = new Coord(Number(split[0][1]), Number(split[1][1]));
+        let initCoord = new Coord(Number(split[0].slice(1)), Number(split[1].slice(1)));
         star = new AStar(initCoord, new Coord(dFil, dCol), matrix);
-        console.log(star.start());
+        star.start();
     });
 }
 
@@ -42,6 +42,12 @@ function acceptClick() {
 
 function initTable(fils, cols, dFil, dCol) {
     let table = $("table");
+    table.on("mousedown", function(){
+        mouseDown = true;
+    });
+    table.on("mouseup", function(){
+        mouseDown = false;
+    });
 
     for (let i = 0; i < fils; i++) {
         let fila = $("<tr></tr>");
@@ -52,13 +58,16 @@ function initTable(fils, cols, dFil, dCol) {
             if (i === dFil && j === dCol)
                 col.prop("id", "destination");
             col.on("click", clickPosition);
+            col.on("mouseover", function(event){
+                if(mouseDown)
+                    clickPosition(event);
+            })
             fila.append(col);
         }
         table.append(fila);
     }
 
     if(cols / 20 > 1){
-        console.log("ESTOY");
         $("td").each(function(key, elem) {
             $(this).css("padding", 20 - (cols / 7))
         });

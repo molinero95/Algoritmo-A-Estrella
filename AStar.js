@@ -25,9 +25,10 @@ class AStar {
             }
 
         }
-        if (this.found) {
-            return this.buildSolutionPath(); //devolver camino
-        }
+        if (this.found) 
+            this.buildSolutionPath(); //devolver camino
+        else
+            alert("No hay camino");
     }
 
     expandNode(coord) {
@@ -51,7 +52,13 @@ class AStar {
                     });
                     if(!inOpened){
                         //comprobar si esta en cerrada
-                        let inClosed = false;
+                        let inClosed = this.closed.find(function(elem) {
+                            if (elem.getRow() === row && elem.getCol() === col) {
+                                if (actual.getDistFromOrigin() < elem.getDistFromOrigin())
+                                    elem = actual;
+                                return true;
+                            }
+                        });
                         if(!inClosed)  //ni en abierta ni en cerrada
                             this.insertIntoOpened(actual);
                     }
@@ -89,7 +96,7 @@ class AStar {
         else {
             let dRow = Math.abs(row - coord2.getRow());
             let dCol = Math.abs(col - coord2.getCol());
-            return Math.sqrt(Math.pow(dRow, 2), Math.pow(dCol,2));
+            return Math.sqrt(Math.pow(dRow, 2) + Math.pow(dCol,2));
         }
     }
 
@@ -147,7 +154,7 @@ class AStar {
         else {
             let dRow = Math.abs(row - this.end.getRow());
             let dCol = Math.abs(col - this.end.getCol());
-            return Math.sqrt(Math.pow(dRow, 2), Math.pow(dCol, 2));
+            return Math.sqrt(Math.pow(dRow, 2) + Math.pow(dCol, 2));
         }
     }
 }
