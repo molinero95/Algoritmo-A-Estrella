@@ -5,23 +5,27 @@ body{
 
 table{
     border-style: solid;
-    border-width: 3px;
+    border-width: 6px;
     border-color: black;
-    margin-right: 3rem;
-    margin-left: 3rem;
+    width: 50%;
+    margin: auto;
     margin-bottom: 9rem;
     margin-top: 3rem;
 }
 td {
     padding: 15px;
-    background-color: lightgray;
+    background-color: cornflowerblue;
     border-style: solid;
     border-width: 3px;
     border-color: white;
 }
 
 td:hover{
-    background: grey;
+    background: blue;
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center; 
 }
 
 @media only screen and (min-width: 200px){
@@ -57,22 +61,47 @@ td:hover{
 
 
 #numFils {
-    width: 3rem;
+    width: 2.5rem;
 }
 #numCols {
-    width: 3rem;
+    width: 2.5rem;
 }
 #filDest{
-    width: 3rem;
+    width: 2.5rem;
 }
 #colDest{
-    width: 3rem;
+    width: 2.5rem;
+}
+#probPirate{
+    width: 2.5rem;
 }
 #destination {
     background-color: red;
+    background-image: url("images/tesoro.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center; 
+}
+
+.block {
+    background-image: url("images/mina.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center; 
 }
 
 #calcDiv {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+}
+
+.pirate{
+    background-image: url("images/pirata.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center; 
 }

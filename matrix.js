@@ -7,6 +7,7 @@ class Matrix {
         this.cols = cols;
         this.destination = destination;
         this.matrix = [];
+        this.initCoord = undefined;
         for (let i = 0; i < rows; i++) {
             this.matrix[i] = [];
             for (let j = 0; j < cols; j++) {
@@ -31,21 +32,17 @@ class Matrix {
         }
     }
 
-    addInitialCoord(row, col) {
-        if (!this.initCoords)
-            this.initCoords = new Array();
-        let coord = new Coord(row, col);
-        this.initCoords.push(coord);
+    hasInitialCoord(){
+        return this.initCoord? true: false;
     }
 
-    removeInitialCoord(row, col) {
+    addInitialCoord(row, col) {
         let coord = new Coord(row, col);
-        let i = 0;
-        this.initCoords.forEach(element => {
-            if (element === coord)
-                element.splice(i, 1);
-            i++;
-        });
+        this.initCoord = coord;
+    }
+
+    removeInitialCoord() {
+        this.initCoord = undefined;
     }
 
     addBlockCoord(row, col) {
@@ -57,17 +54,17 @@ class Matrix {
     }
 
     inMatrixLimit(coord){
-        if(coord.getCol() < 0 || coord.getCol() >= this.cols || coord.getRow() < 0 || coord.getRow() >= this.cols)
+        if(coord.getCol() < 0 || coord.getCol() >= this.cols || coord.getRow() < 0 || coord.getRow() >= this.rows)
             return false;
         return true;
     }
+    
 
-    paintCoordPath(coord){
+    setPirate(coord){
         let row = coord.getRow();
         let col = coord.getCol();
-        let elem = $("td.f"+row+".c"+col);
-        elem.css("background", "blue");
-    }
+        let item = $("td.f" + row + ".c" + col);
+        item.addClass("pirate");
 
-    
+    }
 }
