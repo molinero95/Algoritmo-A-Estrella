@@ -19,7 +19,7 @@ function startClick() {
     let split = $(elem).attr("class").split(" ");
     let initCoord = new Coord(Number(split[0].slice(1)), Number(split[1].slice(1)));
     let prob = $("#probPirate").prop("value");
-    if(prob > 100 || prob < 0)
+    if (prob > 100 || prob < 0)
         alert("Probabilidad no valida");
     else {
         star = new AStar(initCoord, new Coord(dFil, dCol), matrix, prob);
@@ -27,14 +27,14 @@ function startClick() {
     }
 }
 
-function clearBoatIcons(){
-    $(".path").each(function(index, elem){
+function clearBoatIcons() {
+    $(".path").each(function (index, elem) {
         $(elem).removeClass("path");
     });
 }
 
-function clearPirateIcons(){
-    $(".pirate").each(function(index, elem){
+function clearPirateIcons() {
+    $(".pirate").each(function (index, elem) {
         $(elem).removeClass("pirate");
     });
 }
@@ -51,11 +51,11 @@ function acceptClick() {
         alert("Demasiado grande");
         $("#calcular").prop("disabled", true);
     }
-    else if(fils <= 0 || cols <= 0){
+    else if (fils <= 0 || cols <= 0) {
         alert("Demasiado pequeño");
         $("#calcular").prop("disabled", true);
     }
-    else if (dFil < 0 || dCol < 0 || dFil > fils || dCol > cols){
+    else if (dFil < 0 || dCol < 0 || dFil > fils || dCol > cols) {
         alert("Posición destino no válida");
         $("#calcular").prop("disabled", true);
     }
@@ -128,9 +128,9 @@ function clickPosition(event) {
         }
         else {   //casilla no marcada
             if (!item.hasClass("selected")) {//no seleccionado como inicio
-                if (!item.hasClass("block")) 
+                if (!item.hasClass("block"))
                     item.addClass("block");
-                else 
+                else
                     item.removeClass("block");
             }
         }
