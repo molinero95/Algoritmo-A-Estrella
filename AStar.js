@@ -74,7 +74,7 @@ class AStar {
                         }
                     }
                     else{
-                        this.matrix.setPirate(actual);
+                        actual.paintCoordPirate();
                     }
 
                     //this.insertIntoOpened(actual);

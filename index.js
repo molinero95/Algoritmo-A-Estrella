@@ -10,6 +10,8 @@ var matrix;
 var mouseDown;
 
 function startClick() {
+    clearPirateIcons();
+    clearBoatIcons();
     let dFil = Number($("#filDest").prop("value")) - 1;
     let dCol = Number($("#colDest").prop("value")) - 1;
     let star = null;
@@ -17,8 +19,24 @@ function startClick() {
     let split = $(elem).attr("class").split(" ");
     let initCoord = new Coord(Number(split[0].slice(1)), Number(split[1].slice(1)));
     let prob = $("#probPirate").prop("value");
-    star = new AStar(initCoord, new Coord(dFil, dCol), matrix, prob);
-    star.start();
+    if(prob > 100 || prob < 0)
+        alert("Probabilidad no valida");
+    else {
+        star = new AStar(initCoord, new Coord(dFil, dCol), matrix, prob);
+        star.start();
+    }
+}
+
+function clearBoatIcons(){
+    $(".path").each(function(index, elem){
+        $(elem).removeClass("path");
+    });
+}
+
+function clearPirateIcons(){
+    $(".pirate").each(function(index, elem){
+        $(elem).removeClass("pirate");
+    });
 }
 
 function acceptClick() {
@@ -28,12 +46,19 @@ function acceptClick() {
     let cols = Number($("#numCols").prop("value"));
     let dFil = Number($("#filDest").prop("value")) - 1;
     let dCol = Number($("#colDest").prop("value")) - 1;
-    if (fils <= 0 || cols <= 0 || fils > 40 || cols > 40) {
+    let prob = $("#probPirate").prop("value");
+    if (fils > 40 || cols > 40) {
         alert("Demasiado grande");
         $("#calcular").prop("disabled", true);
     }
-    else if (dFil < 0 || dCol < 0 || dFil > fils || dCol > cols)
+    else if(fils <= 0 || cols <= 0){
+        alert("Demasiado pequeño");
+        $("#calcular").prop("disabled", true);
+    }
+    else if (dFil < 0 || dCol < 0 || dFil > fils || dCol > cols){
         alert("Posición destino no válida");
+        $("#calcular").prop("disabled", true);
+    }
     else {
         matrix = new Matrix(fils, cols, dFil, dCol);
         initTable(fils, cols, dFil, dCol);

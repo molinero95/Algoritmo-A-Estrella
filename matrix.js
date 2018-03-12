@@ -59,12 +59,4 @@ class Matrix {
         return true;
     }
     
-
-    setPirate(coord){
-        let row = coord.getRow();
-        let col = coord.getCol();
-        let item = $("td.f" + row + ".c" + col);
-        item.addClass("pirate");
-
-    }
 }

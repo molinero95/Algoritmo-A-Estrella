@@ -105,3 +105,11 @@ td:hover{
     background-size: cover;
     background-position: center; 
 }
+
+.path{
+    background-image: url("images/boat.png");
+    background-attachment: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center;
+}
