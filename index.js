@@ -128,8 +128,10 @@ function clickPosition(event) {
         }
         else {   //casilla no marcada
             if (!item.hasClass("selected")) {//no seleccionado como inicio
-                if (!item.hasClass("block"))
+                if (!item.hasClass("block")){
+                    item.removeClass("path");
                     item.addClass("block");
+                }
                 else
                     item.removeClass("block");
             }

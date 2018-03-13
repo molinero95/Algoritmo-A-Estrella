@@ -53,24 +53,21 @@ class AStar {
                         actual.setEstimation(this.estimate(actual));
                         //valor del anterior + distancia entre padre e hijo + estimación
                         actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual));
-                        let inOpened = this.opened.find(function (elem) {//busco si n esta en abierta
-                            if (elem.getRow() === row && elem.getCol() === col) {
-                                if (actual.getDistFromOrigin() < elem.getDistFromOrigin())
-                                    elem = actual;
-                                return true;
+                        if(!this.coordInList(actual, this.opened) && !this.coordInList(actual, this.closed))    //Ni abierta ni cerrada
+                            this.insertIntoOpened(actual);
+                        else{
+                            let inClosed = true;
+                            let oldCoord = this.getCoordFromList(actual, this.closed);
+                            if(!oldCoord) {  //buscamos en abierta
+                                oldCoord = this.getCoordFromList(actual, this.opened);
+                                inClosed = false;
                             }
-                        });
-                        if (!inOpened) {
-                            //comprobar si esta en cerrada
-                            let inClosed = this.closed.find(function (elem) {
-                                if (elem.getRow() === row && elem.getCol() === col) {
-                                    if (actual.getDistFromOrigin() < elem.getDistFromOrigin())
-                                        elem = actual;
-                                    return true;
-                                }
-                            });
-                            if (!inClosed)  //ni en abierta ni en cerrada
-                                this.insertIntoOpened(actual);
+                            if(oldCoord.getDistFromOrigin() > actual.getDistFromOrigin()){
+                                if(!inClosed)
+                                    this.modifyCoordInList(actual, this.opened);
+                                else
+                                    this.modifyCoordInList(actual, this.closed);
+                            }
                         }
                     }
                     else{
@@ -84,6 +81,33 @@ class AStar {
         this.opened = this.opened.sort(this.compareFunction); //reordenamos despues de cada expansión
     }
 
+    modifyCoordInList(coord, list){
+        let found = false;
+        let i = 0;
+        while(!found && i < list.length){
+            if(list[i].getRow() === coord.getRow() && list[i].getCol() === coord.getCol()){
+                found = true;
+                list[i] = coord;
+            }
+            i++;
+        }
+        
+    }
+
+    getCoordFromList(coord, list){
+        let elem =  list.find(function(e) { 
+            if(e.getRow() === coord.getRow() && e.getCol() === coord.getCol()) 
+            return e;
+        });
+        return elem;
+    }
+
+    coordInList(coord, list){
+        return list.some(function(e) { 
+            if(e.getRow() === coord.getRow() && e.getCol() === coord.getCol()) 
+                return true;
+        })
+    }
     compareFunction(a, b) {
         if (a.getEstimation() === 0)
             return -1;
