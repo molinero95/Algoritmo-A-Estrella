@@ -1,6 +1,11 @@
 body{
     padding: 0;
     margin:0;
+    background-image: url("images/fondo.jpg");
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+     
 }
 
 table{
@@ -48,6 +53,7 @@ td:hover{
 
 
 #options{
+    border: #3E2723 solid 0.4rem;
     padding: 2rem;
     background: white;
     display: flex;
