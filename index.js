@@ -10,20 +10,25 @@ var matrix;
 var mouseDown;
 
 function startClick() {
-    clearPirateIcons();
-    clearBoatIcons();
-    let dFil = Number($("#filDest").prop("value")) - 1;
-    let dCol = Number($("#colDest").prop("value")) - 1;
-    let star = null;
-    let elem = $("td.selected");
-    let split = $(elem).attr("class").split(" ");
-    let initCoord = new Coord(Number(split[0].slice(1)), Number(split[1].slice(1)));
-    let prob = $("#probPirate").prop("value");
-    if (prob > 100 || prob < 0)
-        alert("Probabilidad no valida");
-    else {
-        star = new AStar(initCoord, new Coord(dFil, dCol), matrix, prob);
-        star.start();
+    if (matrix.hasInitialCoord()) {
+        clearPirateIcons();
+        clearBoatIcons();
+        let dFil = Number($("#filDest").prop("value")) - 1;
+        let dCol = Number($("#colDest").prop("value")) - 1;
+        let star = null;
+        let elem = $("td.selected");
+        let split = $(elem).attr("class").split(" ");
+        let initCoord = new Coord(Number(split[0].slice(1)), Number(split[1].slice(1)));
+        let prob = $("#probPirate").prop("value");
+        if (prob > 100 || prob < 0)
+            alert("Probabilidad no valida");
+        else {
+            star = new AStar(initCoord, new Coord(dFil, dCol), matrix, prob);
+            star.start();
+        }
+    }
+    else{
+        alert("No hay coordenada inicial");
     }
 }
 
@@ -121,14 +126,14 @@ function clickPosition(event) {
                 }
                 else {
                     item.removeClass("selected");
-                    item.css("background-color", "cornflower");
+                    item.css("background-color", "#6495ED");
                     matrix.removeInitialCoord();
                 }
             }
         }
         else {   //casilla no marcada
             if (!item.hasClass("selected")) {//no seleccionado como inicio
-                if (!item.hasClass("block")){
+                if (!item.hasClass("block")) {
                     item.removeClass("path");
                     item.addClass("block");
                 }
