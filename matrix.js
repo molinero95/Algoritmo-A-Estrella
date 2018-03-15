@@ -27,6 +27,8 @@ class Matrix {
                 return "block";
             else if (elem.classList[2] === "selected")
                 return "init";
+            else if(elem.classList[2] === "wind")
+                return "wind";
             else
                 return "clear";
         }

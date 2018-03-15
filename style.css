@@ -106,7 +106,30 @@ td:hover{
     background-position: center; 
 }
 
+.wind{
+    background-image: url("images/wind.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+    background-size: contain;
+    background-position: center; 
+}
+
 .path{
+    background-image: url("images/boat.png");
+    background-attachment: no-repeat;
+    background-attachment: local;
+    background-size: cover;
+    background-position: center;
+}
+
+#radios {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.wind.path {
+    background-color: yellow;
     background-image: url("images/boat.png");
     background-attachment: no-repeat;
     background-attachment: local;

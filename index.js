@@ -1,6 +1,7 @@
 $(function () {
     $("#aceptar").on("click", acceptClick);
     $("#calcular").on("click", startClick);
+    $("#initSelected").prop("checked", true);
     initTable();
     acceptClick();
     let tdPd = $("td").css("padding");
@@ -112,14 +113,15 @@ function clickPosition(event) {
     let colPos = col.split('c')[1];
     let item = $("." + fila + "." + col);
     if (item.prop("id") !== "destination") {
-        if ($("#initSelected").is(":checked")) {  //casilla marcada
-            if (!item.hasClass("block")) {
+        if ($("#initSelected").is(":checked")) {  //Inicio marcado
+            if (!item.hasClass("block") && !item.hasClass("wind")) {
                 if (!item.hasClass("selected")) {
                     if (matrix.hasInitialCoord()) {
                         alert("Ya hay una coordenada de origen");
                     }
                     else {
                         item.css("background-color", "green");
+                        item.removeClass("path");
                         item.addClass("selected");
                         matrix.addInitialCoord(filaPos, colPos);
                     }
@@ -131,14 +133,25 @@ function clickPosition(event) {
                 }
             }
         }
-        else {   //casilla no marcada
-            if (!item.hasClass("selected")) {//no seleccionado como inicio
+        else if($("#blockSelected").is(":checked")){   //Bloque marcado
+            if (!item.hasClass("selected") && !item.hasClass("wind")) {//no seleccionado como inicio
                 if (!item.hasClass("block")) {
                     item.removeClass("path");
                     item.addClass("block");
                 }
                 else
                     item.removeClass("block");
+            }
+        }
+        else{   //wind marcado
+            if(!item.hasClass("selected") && !item.hasClass("block")){
+                if(!item.hasClass("wind")){
+                    item.removeClass("path");
+                    item.addClass("wind");
+                }
+                else
+                    item.removeClass("wind");
+
             }
         }
     }

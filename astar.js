@@ -52,7 +52,10 @@ class AStar {
                         actual.setBefore(coord);    //padre es coord
                         actual.setEstimation(this.estimate(actual));
                         //valor del anterior + distancia entre padre e hijo + estimación
-                        actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual));
+                        if(this.matrix.getPossitionValue(row, col) !== "wind")
+                            actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual));
+                        else
+                            actual.setDistFromOrigin(coord.getDistFromOrigin() + this.getDistance(coord, actual) * 2);
                         if(!this.coordInList(actual, this.opened) && !this.coordInList(actual, this.closed))    //Ni abierta ni cerrada
                             this.insertIntoOpened(actual);
                         else{
