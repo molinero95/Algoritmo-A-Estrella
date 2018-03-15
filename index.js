@@ -114,14 +114,14 @@ function clickPosition(event) {
                         alert("Ya hay una coordenada de origen");
                     }
                     else {
-                        $("." + fila + "." + col).css("background-color", "green");
+                        item.css("background-color", "green");
                         item.addClass("selected");
                         matrix.addInitialCoord(filaPos, colPos);
                     }
                 }
                 else {
                     item.removeClass("selected");
-                    $("." + fila + "." + col).css("background-color", "cornflower");
+                    item.css("background-color", "cornflower");
                     matrix.removeInitialCoord();
                 }
             }
