@@ -1,7 +1,7 @@
 # Algoritmo-A-Estrella
 
-Implementación para la simulación de búsqueda del tesoro.
-https://molinero95.github.io/Algoritmo-A-Estrella/
+Implementación para la simulación de búsqueda del tesoro.<br>
+https://molinero95.github.io/Algoritmo-A-Estrella/<br>
 Instrucciones:<br>
   1º Establecer las dimensiones del tablero.<br>
   2º Establecer la ubicación del tesoro.<br>
