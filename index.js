@@ -120,8 +120,8 @@ function clickPosition(event) {
                     }
                 }
                 else {
-                    $("." + fila + "." + col).css("background-color", "cornflower   ");
                     item.removeClass("selected");
+                    $("." + fila + "." + col).css("background-color", "cornflower");
                     matrix.removeInitialCoord();
                 }
             }
