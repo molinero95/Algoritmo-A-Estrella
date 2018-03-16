@@ -89,7 +89,7 @@ function initTable(fils, cols, dFil, dCol) {
             if (i === dFil && j === dCol)
                 col.prop("id", "destination");
             col.on("click", clickPosition);
-            col.on("click touchstart", clickPosition);
+            //col.on("click touchstart", clickPosition);
             col.on("mouseover", function (event) {
                 if (mouseDown)
                     clickPosition(event);
